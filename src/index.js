@@ -3,8 +3,8 @@ import { addReadyListener } from './util';
 import styles from './index.module.css';
 
 
-export default function (app, options) {
-    app.addRouteListener('courses.conferences', params => {
+export default function ({ router, api }) {
+    router.addListener('courses.conferences', params => {
         let groupsMap, sectionsMap;
         let firstRun = true;
 
@@ -16,14 +16,14 @@ export default function (app, options) {
 
                 // Wait for all data to be fetched
                 Promise.all([
-                    app.api.get(`/courses/${params.courseId}/users`, {
+                    api.get(`/courses/${params.courseId}/users`, {
                         per_page: 100,
                         enrollment_type: 'student',
                         include_inactive: false,
                         include: ['enrollments', 'group_ids']
                     }),
-                    app.api.get(`/courses/${params.courseId}/groups`),
-                    app.api.get(`/courses/${params.courseId}/sections`)
+                    api.get(`/courses/${params.courseId}/groups`),
+                    api.get(`/courses/${params.courseId}/sections`)
                 ]).then(([users, groups, sections]) => {
                     let userMapper = user => `user_${user.id}`;
                     let groupMapper = group => ([`group_${group.id}`, {
