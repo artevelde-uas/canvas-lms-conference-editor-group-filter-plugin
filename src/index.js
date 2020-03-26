@@ -9,43 +9,6 @@ export default function ({ router, api }) {
         let firstRun = true;
 
         addReadyListener('#members_list', membersList => {
-
-            // Do some initialization on the first run
-            if (firstRun) {
-                firstRun = false;
-
-                // Wait for all data to be fetched
-                Promise.all([
-                    api.get(`/courses/${params.courseId}/users`, {
-                        per_page: 100,
-                        enrollment_type: 'student',
-                        include_inactive: false,
-                        include: ['enrollments', 'group_ids']
-                    }),
-                    api.get(`/courses/${params.courseId}/groups`),
-                    api.get(`/courses/${params.courseId}/sections`)
-                ]).then(([users, groups, sections]) => {
-                    let userMapper = user => `user_${user.id}`;
-                    let groupMapper = group => ([`group_${group.id}`, {
-                        name: group.name,
-                        members: users.filter(user => user.group_ids.includes(group.id)).map(userMapper)
-                    }]);
-                    let sectionMapper = section => ([`section_${section.id}`, {
-                        name: section.name,
-                        members: users.filter(user => user.enrollments.some(enrollment => enrollment.course_section_id === section.id)).map(userMapper)
-                    }]);
-
-                    // Get the group subscriptions
-                    groupsMap = new Map(groups.map(groupMapper));
-                    // Get the section subscriptions
-                    sectionsMap = new Map(sections.map(sectionMapper));
-
-                    main();
-                });
-            } else {
-                main();
-            }
-
             let legend = membersList.closest('form').querySelector('legend');
             let inviteAllUsers = document.getElementById('user_all');
             let removeObservers = document.getElementById('observers_remove');
@@ -121,6 +84,42 @@ export default function ({ router, api }) {
                         checkbox.checked = true;
                     });
                 });
+            }
+
+            // Do some initialization on the first run
+            if (firstRun) {
+                firstRun = false;
+
+                // Wait for all data to be fetched
+                Promise.all([
+                    api.get(`/courses/${params.courseId}/users`, {
+                        per_page: 100,
+                        enrollment_type: 'student',
+                        include_inactive: false,
+                        include: ['enrollments', 'group_ids']
+                    }),
+                    api.get(`/courses/${params.courseId}/groups`),
+                    api.get(`/courses/${params.courseId}/sections`)
+                ]).then(([users, groups, sections]) => {
+                    let userMapper = user => `user_${user.id}`;
+                    let groupMapper = group => ([`group_${group.id}`, {
+                        name: group.name,
+                        members: users.filter(user => user.group_ids.includes(group.id)).map(userMapper)
+                    }]);
+                    let sectionMapper = section => ([`section_${section.id}`, {
+                        name: section.name,
+                        members: users.filter(user => user.enrollments.some(enrollment => enrollment.course_section_id === section.id)).map(userMapper)
+                    }]);
+
+                    // Get the group subscriptions
+                    groupsMap = new Map(groups.map(groupMapper));
+                    // Get the section subscriptions
+                    sectionsMap = new Map(sections.map(sectionMapper));
+
+                    main();
+                });
+            } else {
+                main();
             }
 
         });
