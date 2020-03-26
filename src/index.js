@@ -50,6 +50,7 @@ export default function (app, options) {
             let legend = membersList.closest('form').querySelector('legend');
             let inviteAllUsers = document.getElementById('user_all');
             let removeObservers = document.getElementById('observers_remove');
+            let checkboxes = membersList.querySelectorAll('.member input[type="checkbox"][id^="user_"]');
 
             // Insert a new 'Members' control group after the last one
             legend.insertAdjacentHTML('beforebegin', `
@@ -92,6 +93,27 @@ export default function (app, options) {
                         ${Array.from(sectionsMap.entries()).map(([key, section]) => `<option value="${key}">${section.name}</option>`).join('\n')}
                     </optgroup>
                 `);
+
+                // Filter the users on selection change
+                groupFilter.addEventListener('change', event => {
+                    let match = event.target.value.match(/^(section|group)_\d+$/);
+
+                    if (match === null) {
+                        checkboxes.forEach(checkbox => {
+                            checkbox.closest('li').removeAttribute('hidden');
+                        });
+
+                        return;
+                    }
+
+                    let [key, type] = match;
+                    let map = (type === 'group') ? groupsMap : sectionsMap;
+                    let members = map.get(key).members;
+
+                    checkboxes.forEach(checkbox => {
+                        checkbox.closest('li').toggleAttribute('hidden', !members.includes(checkbox.id));
+                    });
+                });
             }
         });
 
