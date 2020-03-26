@@ -1,4 +1,4 @@
-import watched from 'watched';
+import { addReadyListener } from './util';
 
 import styles from './index.module.css';
 
@@ -6,10 +6,9 @@ import styles from './index.module.css';
 export default function (app, options) {
     app.addRouteListener('courses.conferences', params => {
         let groupsMap, sectionsMap;
-        let nodeList = watched(document.body).querySelector('#members_list');
         let firstRun = true;
 
-        nodeList.on('added', ([membersList]) => {
+        addReadyListener('#members_list', membersList => {
 
             // Do some initialization on the first run
             if (firstRun) {
