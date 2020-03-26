@@ -56,11 +56,11 @@ export default function ({ router, api }) {
                 <div class="control-group">
                     <label class="control-label">${legend.textContent}</label>
                     <div class="controls">
-                        <div id="${styles.membersSelector}" class="hidden">
+                        <div id="${styles.membersSelector}">
+                            <button id="${styles.selectAll}" class="btn">Select all</button>
                             <select id="${styles.groupFilter}">
                                 <option>No group filter selected</option>
                             </select>
-                            <button id="${styles.selectAll}" class="btn" disabled>Select all</button>
                         </div>
                     </div>
                 </div>
@@ -72,18 +72,14 @@ export default function ({ router, api }) {
             let selectAll = document.getElementById(styles.selectAll);
 
             // Move the relevant controls to the new control group
-            membersSelector.parentNode.prepend(inviteAllUsers.parentNode, removeObservers.parentNode);
+            membersSelector.parentNode.prepend(inviteAllUsers.previousElementSibling);
+            membersSelector.parentNode.append(removeObservers.parentNode);
             groupFilter.parentNode.append(membersList);
 
             // Remove the remaining unwanted nodes
             while (membersControlGroup.nextSibling !== null) {
                 membersControlGroup.nextSibling.remove();
             }
-
-            // Show the list without anaimations
-            inviteAllUsers.addEventListener('change', event => {
-                membersSelector.classList.toggle('hidden', inviteAllUsers.checked);
-            });
 
             function main() {
                 groupFilter.insertAdjacentHTML('beforeend', `
@@ -102,7 +98,6 @@ export default function ({ router, api }) {
                     if (match === null) {
                         checkboxes.forEach(checkbox => {
                             checkbox.closest('li').removeAttribute('hidden');
-                            selectAll.toggleAttribute('disabled', true);
                         });
 
                         return;
@@ -114,7 +109,6 @@ export default function ({ router, api }) {
 
                     checkboxes.forEach(checkbox => {
                         checkbox.closest('li').toggleAttribute('hidden', !members.includes(checkbox.id));
-                        selectAll.toggleAttribute('disabled', false);
                     });
                 });
 
@@ -128,6 +122,7 @@ export default function ({ router, api }) {
                     });
                 });
             }
+
         });
 
     });
