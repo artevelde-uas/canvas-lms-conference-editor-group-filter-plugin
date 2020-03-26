@@ -20,10 +20,10 @@ export default function ({ router, api }) {
                     <label class="control-label">${legend.textContent}</label>
                     <div class="controls">
                         <div id="${styles.membersSelector}">
-                            <button id="${styles.selectAll}" class="btn">Select all</button>
                             <select id="${styles.groupFilter}">
                                 <option>No group filter selected</option>
                             </select>
+                            <button id="${styles.selectAll}" class="btn">Select all</button>
                         </div>
                     </div>
                 </div>
@@ -45,6 +45,19 @@ export default function ({ router, api }) {
             }
 
             function main() {
+
+                function isAllSelected() {
+                    let checkboxes = membersList.querySelectorAll('.member:not([hidden]) input[type="checkbox"][id^="user_"]');
+
+                    console.log(!Array.from(checkboxes).some(checkbox => !checkbox.checked));
+
+                    return !Array.from(checkboxes).some(checkbox => !checkbox.checked);
+                }
+
+                function selectionHandler () {
+                    selectAll.textContent = isAllSelected() ? 'Deselect all' : 'Select all';
+                }
+
                 groupFilter.insertAdjacentHTML('beforeend', `
                     <optgroup label="Group">
                         ${Array.from(groupsMap.entries()).map(([key, group]) => `<option value="${key}">${group.name}</option>`).join('\n')}
@@ -54,6 +67,8 @@ export default function ({ router, api }) {
                     </optgroup>
                 `);
 
+                membersList.addEventListener('change', selectionHandler);
+
                 // Filter the users on selection change
                 groupFilter.addEventListener('change', event => {
                     let match = event.target.value.match(/^(section|group)_\d+$/);
@@ -62,6 +77,8 @@ export default function ({ router, api }) {
                         checkboxes.forEach(checkbox => {
                             checkbox.closest('li').removeAttribute('hidden');
                         });
+
+                        selectionHandler();
 
                         return;
                     }
@@ -73,16 +90,21 @@ export default function ({ router, api }) {
                     checkboxes.forEach(checkbox => {
                         checkbox.closest('li').toggleAttribute('hidden', !members.includes(checkbox.id));
                     });
+
+                    selectionHandler();
                 });
 
                 selectAll.addEventListener('click', event => {
                     let checkboxes = membersList.querySelectorAll('.member:not([hidden]) input[type="checkbox"][id^="user_"]');
+                    let checked = !isAllSelected();
 
                     event.preventDefault();
 
                     checkboxes.forEach(checkbox => {
-                        checkbox.checked = true;
+                        checkbox.checked = checked;
                     });
+
+                    selectionHandler();
                 });
             }
 
