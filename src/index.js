@@ -5,9 +5,44 @@ import styles from './index.module.css';
 
 export default function (app, options) {
     app.addRouteListener('courses.conferences', params => {
+        let groupsMap, sectionsMap;
         let nodeList = watched(document.body).querySelector('#members_list');
+        let firstRun = true;
 
         nodeList.on('added', ([membersList]) => {
+
+            // Do some initialization on the first run
+            if (firstRun) {
+                firstRun = false;
+
+                // Wait for all data to be fetched
+                Promise.all([
+                    app.api.get(`/courses/${params.courseId}/users`, {
+                        per_page: 100,
+                        enrollment_type: 'student',
+                        include_inactive: false,
+                        include: ['enrollments', 'group_ids']
+                    }),
+                    app.api.get(`/courses/${params.courseId}/groups`),
+                    app.api.get(`/courses/${params.courseId}/sections`)
+                ]).then(([users, groups, sections]) => {
+                    // Get the group subscriptions
+                    groupsMap = new Map(groups.map(group => ([group.id, {
+                        name: group.name,
+                        members: users.filter(user => user.group_ids.includes(group.id))
+                    }])));
+                    // Get the section subscriptions
+                    sectionsMap = new Map(sections.map(section => ([section.id, {
+                        name: section.name,
+                        members: users.filter(user => user.enrollments.some(enrollment => enrollment.course_section_id === section.id))
+                    }])));
+
+                    main();
+                });
+            } else {
+                main();
+            }
+
             let legend = membersList.closest('form').querySelector('legend');
             let inviteAllUsers = document.getElementById('user_all');
             let removeObservers = document.getElementById('observers_remove');
@@ -43,6 +78,17 @@ export default function (app, options) {
             inviteAllUsers.addEventListener('change', event => {
                 membersSelector.classList.toggle('hidden', inviteAllUsers.checked);
             });
+
+            function main() {
+                groupFilter.insertAdjacentHTML('beforeend', `
+                    <optgroup label="Group">
+                        ${Array.from(groupsMap.entries()).map(([id, group]) => `<option value="group_${id}">${group.name}</option>`).join('\n')}
+                    </optgroup>
+                    <optgroup label="Course section">
+                        ${Array.from(sectionsMap.entries()).map(([id, section]) => `<option value="section_${id}">${section.name}</option>`).join('\n')}
+                    </optgroup>
+                `);
+            }
         });
 
     });
