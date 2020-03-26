@@ -26,16 +26,20 @@ export default function (app, options) {
                     app.api.get(`/courses/${params.courseId}/groups`),
                     app.api.get(`/courses/${params.courseId}/sections`)
                 ]).then(([users, groups, sections]) => {
-                    // Get the group subscriptions
-                    groupsMap = new Map(groups.map(group => ([group.id, {
+                    let userMapper = user => `user_${user.id}`;
+                    let groupMapper = group => ([`group_${group.id}`, {
                         name: group.name,
-                        members: users.filter(user => user.group_ids.includes(group.id))
-                    }])));
-                    // Get the section subscriptions
-                    sectionsMap = new Map(sections.map(section => ([section.id, {
+                        members: users.filter(user => user.group_ids.includes(group.id)).map(userMapper)
+                    }]);
+                    let sectionMapper = section => ([`section_${section.id}`, {
                         name: section.name,
-                        members: users.filter(user => user.enrollments.some(enrollment => enrollment.course_section_id === section.id))
-                    }])));
+                        members: users.filter(user => user.enrollments.some(enrollment => enrollment.course_section_id === section.id)).map(userMapper)
+                    }]);
+
+                    // Get the group subscriptions
+                    groupsMap = new Map(groups.map(groupMapper));
+                    // Get the section subscriptions
+                    sectionsMap = new Map(sections.map(sectionMapper));
 
                     main();
                 });
@@ -82,10 +86,10 @@ export default function (app, options) {
             function main() {
                 groupFilter.insertAdjacentHTML('beforeend', `
                     <optgroup label="Group">
-                        ${Array.from(groupsMap.entries()).map(([id, group]) => `<option value="group_${id}">${group.name}</option>`).join('\n')}
+                        ${Array.from(groupsMap.entries()).map(([key, group]) => `<option value="${key}">${group.name}</option>`).join('\n')}
                     </optgroup>
                     <optgroup label="Course section">
-                        ${Array.from(sectionsMap.entries()).map(([id, section]) => `<option value="section_${id}">${section.name}</option>`).join('\n')}
+                        ${Array.from(sectionsMap.entries()).map(([key, section]) => `<option value="${key}">${section.name}</option>`).join('\n')}
                     </optgroup>
                 `);
             }
