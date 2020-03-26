@@ -1,5 +1,6 @@
 
 :global(#members_list) {
+    display: block !important;
     height: auto !important;
     max-height: none !important;
     margin-top: 10px !important;
@@ -14,3 +15,8 @@
     transition: border linear 0.2s,
                 box-shadow linear 0.2s;
 }
+
+#members-selector {
+    margin-top: 12px;
+}
+#group-filter {}

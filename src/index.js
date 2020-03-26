@@ -17,19 +17,32 @@ export default function (app, options) {
                 <div class="control-group">
                     <label class="control-label">${legend.textContent}</label>
                     <div class="controls">
+                        <div id="${styles.membersSelector}" class="hidden">
+                            <select id="${styles.groupFilter}">
+                                <option>No group filter selected</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             `);
 
             let membersControlGroup = legend.previousElementSibling;
+            let membersSelector = document.getElementById(styles.membersSelector);
+            let groupFilter = document.getElementById(styles.groupFilter);
 
             // Move the relevant controls to the new control group
-            membersControlGroup.querySelector('.controls').append(inviteAllUsers.parentNode, removeObservers.parentNode, membersList);
+            membersSelector.parentNode.prepend(inviteAllUsers.parentNode, removeObservers.parentNode);
+            groupFilter.parentNode.append(membersList);
 
             // Remove the remaining unwanted nodes
             while (membersControlGroup.nextSibling !== null) {
                 membersControlGroup.nextSibling.remove();
             }
+
+            // Show the list without anaimations
+            inviteAllUsers.addEventListener('change', event => {
+                membersSelector.classList.toggle('hidden', inviteAllUsers.checked);
+            });
         });
 
     });
