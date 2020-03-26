@@ -61,6 +61,7 @@ export default function (app, options) {
                             <select id="${styles.groupFilter}">
                                 <option>No group filter selected</option>
                             </select>
+                            <button id="${styles.selectAll}" class="btn" disabled>Select all</button>
                         </div>
                     </div>
                 </div>
@@ -69,6 +70,7 @@ export default function (app, options) {
             let membersControlGroup = legend.previousElementSibling;
             let membersSelector = document.getElementById(styles.membersSelector);
             let groupFilter = document.getElementById(styles.groupFilter);
+            let selectAll = document.getElementById(styles.selectAll);
 
             // Move the relevant controls to the new control group
             membersSelector.parentNode.prepend(inviteAllUsers.parentNode, removeObservers.parentNode);
@@ -101,6 +103,7 @@ export default function (app, options) {
                     if (match === null) {
                         checkboxes.forEach(checkbox => {
                             checkbox.closest('li').removeAttribute('hidden');
+                            selectAll.toggleAttribute('disabled', true);
                         });
 
                         return;
@@ -112,6 +115,17 @@ export default function (app, options) {
 
                     checkboxes.forEach(checkbox => {
                         checkbox.closest('li').toggleAttribute('hidden', !members.includes(checkbox.id));
+                        selectAll.toggleAttribute('disabled', false);
+                    });
+                });
+
+                selectAll.addEventListener('click', event => {
+                    let checkboxes = membersList.querySelectorAll('.member:not([hidden]) input[type="checkbox"][id^="user_"]');
+
+                    event.preventDefault();
+
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = true;
                     });
                 });
             }
