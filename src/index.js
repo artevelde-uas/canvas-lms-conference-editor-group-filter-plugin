@@ -95,7 +95,7 @@ export default function ({ router, api }) {
                 });
 
                 selectAll.addEventListener('click', event => {
-                    let checkboxes = membersList.querySelectorAll('.member:not([hidden]) input[type="checkbox"][id^="user_"]');
+                    let checkboxes = membersList.querySelectorAll('.member:not([hidden]) input[type="checkbox"][id^="user_"]:not([disabled])');
                     let checked = !isAllSelected();
 
                     event.preventDefault();
