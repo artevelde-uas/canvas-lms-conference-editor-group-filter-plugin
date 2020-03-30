@@ -19,5 +19,7 @@
 #members-selector {
     margin-bottom: 12px;
 }
-#group-filter {}
+#group-filter {
+    width: auto;
+}
 #select-all {}
