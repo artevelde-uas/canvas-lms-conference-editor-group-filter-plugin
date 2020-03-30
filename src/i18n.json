@@ -10,5 +10,11 @@
         "no_filter_selected": "Geen groepfilter geselecteerd",
         "select_all": "Selecteer iedereen",
         "deselect_all": "Iedereen uitschakelen"
+    },
+    "fr": {
+        "members": "Membres",
+        "no_filter_selected": "Aucun filtre de groupe sélectionné",
+        "select_all": "Tout sélectionner",
+        "deselect_all": "Tout déselectionner"
     }
 }
