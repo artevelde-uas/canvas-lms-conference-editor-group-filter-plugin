@@ -22,5 +22,13 @@
         "no_filter_selected": "Aucun filtre de groupe sélectionné",
         "select_all": "Tout sélectionner",
         "deselect_all": "Tout déselectionner"
+    },
+    "de": {
+        "members": "Mitglieder",
+        "groups": "Kursgruppen",
+        "sections": "Kursabschnitte",
+        "no_filter_selected": "Kein Gruppenfilter ausgewählt",
+        "select_all": "Alle auswählen",
+        "deselect_all": "Alle abwählen"
     }
 }
