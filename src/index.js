@@ -63,10 +63,10 @@ export default function ({ router, api, i18n: { translate: __, setTranslations }
                 }
 
                 groupFilter.insertAdjacentHTML('beforeend', `
-                    <optgroup label="Group">
+                    <optgroup label="${__('groups')}">
                         ${Array.from(groupsMap.entries()).map(([key, group]) => `<option value="${key}">${group.name}</option>`).join('\n')}
                     </optgroup>
-                    <optgroup label="Course section">
+                    <optgroup label="${__('sections')}">
                         ${Array.from(sectionsMap.entries()).map(([key, section]) => `<option value="${key}">${section.name}</option>`).join('\n')}
                     </optgroup>
                 `);

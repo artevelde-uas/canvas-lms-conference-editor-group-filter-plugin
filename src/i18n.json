@@ -1,18 +1,24 @@
 {
     "en": {
         "members": "Members",
+        "groups": "Course group",
+        "sections": "Course section",
         "no_filter_selected": "No group filter selected",
         "select_all": "Select all",
         "deselect_all": "Deselect all"
     },
     "nl": {
         "members": "Leden",
+        "groups": "Cursusgroepen",
+        "sections": "Cursussecties",
         "no_filter_selected": "Geen groepfilter geselecteerd",
         "select_all": "Selecteer iedereen",
         "deselect_all": "Iedereen uitschakelen"
     },
     "fr": {
         "members": "Membres",
+        "groups": "Groupes du cours",
+        "sections": "Sections du cours",
         "no_filter_selected": "Aucun filtre de groupe sélectionné",
         "select_all": "Tout sélectionner",
         "deselect_all": "Tout déselectionner"
