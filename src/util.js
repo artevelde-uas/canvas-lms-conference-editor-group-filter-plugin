@@ -1,13 +1,27 @@
-import watched from 'watched';
 
+export function addReadyListener(selector, handler) {
+    let elements = document.querySelectorAll(selector);
 
-export function addReadyListener(query, handler) {
-    let nodeList = watched(document.body).querySelector(query);
-    let element = document.querySelector(query);
-    if (element !== null) {
+    elements.forEach(element => {
         handler(element);
-    }
-    nodeList.on('added', ([element]) => {
-        handler(element);
+    });
+
+    let handledElements = new Set(elements);
+
+    new MutationObserver((mutationRecords) => {
+        if (mutationRecords.some(mutation => (mutation.type === 'childList' && mutation.addedNodes.length))) {
+            let elements = document.querySelectorAll(selector);
+
+            elements.forEach(element => {
+                if (handledElements.has(element)) return;
+
+                handler(element);
+            });
+
+            handledElements = new Set(elements);
+        }
+    }).observe(document, {
+        childList: true,
+        subtree: true
     });
 }
