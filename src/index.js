@@ -1,18 +1,16 @@
-import { addReadyListener } from './util';
-
 import styles from './index.module.css';
 
 import translations from './i18n.json';
 
 
-export default function ({ router, api, i18n: { translate: __, setTranslations } }) {
+export default function ({ router, dom, api, i18n: { translate: __, setTranslations } }) {
     router.addListener('courses.conferences', params => {
         setTranslations(translations);
 
         let groupsMap, sectionsMap;
         let firstRun = true;
 
-        addReadyListener('#members_list', membersList => {
+        dom.onElementAdded('#members_list', membersList => {
             let legend = membersList.closest('form').querySelector('legend');
             let inviteAllUsers = document.getElementById('user_all');
             let removeObservers = document.getElementById('observers_remove');

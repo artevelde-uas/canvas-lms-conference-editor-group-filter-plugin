@@ -14,10 +14,7 @@
     "src/index.module.css",
     "src/i18n.json"
   ],
-  "dependencies": {
-    "watched": "^0.3.2"
-  },
   "peerDependencies": {
-    "@ahsdile/canvas-lms-app": "^0.24.0"
+    "@ahsdile/canvas-lms-app": "^0.25.0"
   }
 }
