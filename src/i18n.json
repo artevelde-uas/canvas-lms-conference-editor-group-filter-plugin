@@ -1,0 +1,14 @@
+{
+    "en": {
+        "members": "Members",
+        "no_filter_selected": "No group filter selected",
+        "select_all": "Select all",
+        "deselect_all": "Deselect all"
+    },
+    "nl": {
+        "members": "Leden",
+        "no_filter_selected": "Geen groepfilter geselecteerd",
+        "select_all": "Selecteer iedereen",
+        "deselect_all": "Iedereen uitschakelen"
+    }
+}

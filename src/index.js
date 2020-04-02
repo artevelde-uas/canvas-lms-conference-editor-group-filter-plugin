@@ -2,9 +2,13 @@ import { addReadyListener } from './util';
 
 import styles from './index.module.css';
 
+import translations from './i18n.json';
 
-export default function ({ router, api }) {
+
+export default function ({ router, api, i18n: { translate: __, setTranslations } }) {
     router.addListener('courses.conferences', params => {
+        setTranslations(translations);
+
         let groupsMap, sectionsMap;
         let firstRun = true;
 
@@ -21,9 +25,9 @@ export default function ({ router, api }) {
                     <div class="controls">
                         <div id="${styles.membersSelector}">
                             <select id="${styles.groupFilter}">
-                                <option>No group filter selected</option>
+                                <option>${__('no_filter_selected')}</option>
                             </select>
-                            <button id="${styles.selectAll}" class="btn">Select all</button>
+                            <button id="${styles.selectAll}" class="btn">${__('select_all')}</button>
                         </div>
                     </div>
                 </div>
@@ -55,7 +59,7 @@ export default function ({ router, api }) {
                 }
 
                 function selectionHandler () {
-                    selectAll.textContent = isAllSelected() ? 'Deselect all' : 'Select all';
+                    selectAll.textContent = isAllSelected() ? __('deselect_all') : __('select_all');
                 }
 
                 groupFilter.insertAdjacentHTML('beforeend', `

@@ -11,7 +11,8 @@
   "module": "src/index.js",
   "files": [
     "src/index.js",
-    "src/index.module.css"
+    "src/index.module.css",
+    "src/i18n.json"
   ],
   "dependencies": {
     "watched": "^0.3.2"
