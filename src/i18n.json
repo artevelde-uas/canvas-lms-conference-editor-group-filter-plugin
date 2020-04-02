@@ -5,7 +5,8 @@
         "sections": "Course section",
         "no_filter_selected": "No group filter selected",
         "select_all": "Select all",
-        "deselect_all": "Deselect all"
+        "deselect_all": "Deselect all",
+        "loading": "Loading, please wait..."
     },
     "nl": {
         "members": "Leden",
@@ -13,7 +14,8 @@
         "sections": "Cursussecties",
         "no_filter_selected": "Geen groepfilter geselecteerd",
         "select_all": "Selecteer iedereen",
-        "deselect_all": "Iedereen uitschakelen"
+        "deselect_all": "Iedereen uitschakelen",
+        "loading": "Bezig met laden, even geduld..."
     },
     "fr": {
         "members": "Membres",
@@ -21,7 +23,8 @@
         "sections": "Sections du cours",
         "no_filter_selected": "Aucun filtre de groupe sélectionné",
         "select_all": "Tout sélectionner",
-        "deselect_all": "Tout déselectionner"
+        "deselect_all": "Tout déselectionner",
+        "loading": "Chargement, veuillez patienter..."
     },
     "de": {
         "members": "Mitglieder",
@@ -29,6 +32,7 @@
         "sections": "Kursabschnitte",
         "no_filter_selected": "Kein Gruppenfilter ausgewählt",
         "select_all": "Alle auswählen",
-        "deselect_all": "Alle abwählen"
+        "deselect_all": "Alle abwählen",
+        "loading": "Laden, bitte warten..."
     }
 }

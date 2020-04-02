@@ -24,6 +24,7 @@ export default function ({ router, dom, api, i18n: { translate: __, setTranslati
                         <div id="${styles.membersSelector}">
                             <select id="${styles.groupFilter}">
                                 <option>${__('no_filter_selected')}</option>
+                                <optgroup class="loading" label="${__('loading')}"></optgroup>
                             </select>
                             <button id="${styles.selectAll}" class="btn">${__('select_all')}</button>
                         </div>
@@ -59,6 +60,8 @@ export default function ({ router, dom, api, i18n: { translate: __, setTranslati
                 function selectionHandler () {
                     selectAll.textContent = isAllSelected() ? __('deselect_all') : __('select_all');
                 }
+
+                groupFilter.querySelector('optgroup.loading').remove();
 
                 groupFilter.insertAdjacentHTML('beforeend', `
                     <optgroup label="${__('groups')}">
