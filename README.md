@@ -3,7 +3,6 @@
 [![](https://img.shields.io/npm/v/@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin.svg)](https://www.npmjs.com/package/@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin)
 [![](https://img.shields.io/github/license/artevelde-uas/canvas-lms-conference-editor-group-filter-plugin.svg)](https://spdx.org/licenses/MIT)
 [![](https://img.shields.io/npm/dt/@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin.svg)](https://www.npmjs.com/package/@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin)
-[![](https://img.shields.io/librariesio/github/artevelde-uas/canvas-lms-conference-editor-group-filter-plugin.svg)](https://libraries.io/npm/@artevelde-uas%2Fcanvas-lms-conference-editor-group-filter-plugin)
 
 Plugin for the [Canvas LMS theme app](https://github.com/ahsdile/canvas-lms-app) that adds a group filter to the user
 selector on the conference editor.
