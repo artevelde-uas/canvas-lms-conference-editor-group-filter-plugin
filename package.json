@@ -1,6 +1,6 @@
 {
   "name": "@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Plugin for the Canvas LMS theme app that adds a group filter to the user selector on the conference editor",
   "keywords": [
     "Canvas LMS"
