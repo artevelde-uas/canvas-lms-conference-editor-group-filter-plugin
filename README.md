@@ -1,4 +1,4 @@
-# Canvas LMS All Courses Terms Tabs Plug-in
+# Canvas LMS Conference Editor Group Filter Plug-in
 
 [![](https://img.shields.io/npm/v/@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin.svg)](https://www.npmjs.com/package/@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin)
 [![](https://img.shields.io/github/license/artevelde-uas/canvas-lms-conference-editor-group-filter-plugin.svg)](https://spdx.org/licenses/MIT)
