@@ -55,7 +55,7 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
                     return !Array.from(checkboxes).some(checkbox => !checkbox.checked);
                 }
 
-                function selectionHandler () {
+                function updateSelectAllLabel() {
                     selectAll.textContent = isAllSelected() ? __('deselect_all') : __('select_all');
                 }
 
@@ -70,7 +70,7 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
                     </optgroup>
                 `);
 
-                membersList.addEventListener('change', selectionHandler);
+                membersList.addEventListener('change', updateSelectAllLabel);
 
                 // Filter the users on selection change
                 groupFilter.addEventListener('change', event => {
@@ -81,7 +81,7 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
                             checkbox.closest('li').removeAttribute('hidden');
                         });
 
-                        selectionHandler();
+                        updateSelectAllLabel();
 
                         return;
                     }
@@ -94,7 +94,7 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
                         checkbox.closest('li').toggleAttribute('hidden', !members.includes(checkbox.id));
                     });
 
-                    selectionHandler();
+                    updateSelectAllLabel();
                 });
 
                 selectAll.addEventListener('click', event => {
@@ -107,7 +107,7 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
                         checkbox.checked = checked;
                     });
 
-                    selectionHandler();
+                    updateSelectAllLabel();
                 });
             }
 
