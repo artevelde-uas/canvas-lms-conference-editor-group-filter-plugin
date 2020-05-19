@@ -24,7 +24,7 @@ Using Yarn:
 Just import the plug-in and add it to the Canvas app:
 
 ```javascript
-import canvas from '@ahsdile/canvas-lms-app';
+import canvas from '@artevelde-uas/canvas-lms-app';
 import conferenceEditorGroupFilterPlugin from '@artevelde-uas/canvas-lms-conference-editor-group-filter-plugin';
 
 canvas.addPlugin(conferenceEditorGroupFilterPlugin);
