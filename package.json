@@ -10,9 +10,7 @@
   "repository": "https://github.com/artevelde-uas/canvas-lms-conference-editor-group-filter-plugin",
   "module": "src/index.js",
   "files": [
-    "src/index.js",
-    "src/index.module.css",
-    "src/i18n.json"
+    "src/"
   ],
   "peerDependencies": {
     "@artevelde-uas/canvas-lms-app": "^0.32.0"
