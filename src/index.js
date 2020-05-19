@@ -3,9 +3,9 @@ import styles from './index.module.css';
 import translations from './i18n.json';
 
 
-export default function ({ router, dom, api, i18n: { translate: __, setTranslations } }) {
+export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
     router.addListener('courses.conferences', params => {
-        setTranslations(translations);
+        i18n.setTranslations(translations);
 
         let groupsMap, sectionsMap;
         let firstRun = true;
