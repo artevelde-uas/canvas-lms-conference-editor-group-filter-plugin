@@ -52,8 +52,6 @@ export default function ({ router, dom, api, i18n: { translate: __, setTranslati
                 function isAllSelected() {
                     let checkboxes = membersList.querySelectorAll('.member:not([hidden]) input[type="checkbox"][id^="user_"]');
 
-                    console.log(!Array.from(checkboxes).some(checkbox => !checkbox.checked));
-
                     return !Array.from(checkboxes).some(checkbox => !checkbox.checked);
                 }
 
