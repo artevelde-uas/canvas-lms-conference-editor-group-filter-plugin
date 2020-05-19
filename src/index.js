@@ -49,18 +49,26 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
 
             function main() {
 
+                /**
+                 * @returns TRUE if all checkboxes are selected
+                 */
                 function isAllSelected() {
                     let checkboxes = membersList.querySelectorAll('.member:not([hidden]) input[type="checkbox"][id^="user_"]');
 
                     return !Array.from(checkboxes).some(checkbox => !checkbox.checked);
                 }
 
+                /**
+                 * Sets the correct label text on the 'Select all' checkbox
+                 */
                 function updateSelectAllLabel() {
                     selectAll.textContent = isAllSelected() ? __('deselect_all') : __('select_all');
                 }
 
+                // Remove the 'Loading...' text from the drop-down
                 groupFilter.querySelector('optgroup.loading').remove();
 
+                // Populate the drop-down with the groups and sections
                 groupFilter.insertAdjacentHTML('beforeend', `
                     <optgroup label="${__('groups')}">
                         ${Array.from(groupsMap.entries()).map(([key, group]) => `<option value="${key}">${group.name}</option>`).join('\n')}
@@ -70,17 +78,20 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
                     </optgroup>
                 `);
 
+                // Update the 'Select all' label on members list changes
                 membersList.addEventListener('change', updateSelectAllLabel);
 
                 // Filter the users on selection change
                 groupFilter.addEventListener('change', event => {
                     let match = event.target.value.match(/^(section|group)_\d+$/);
 
+                    // Show all users if no group selected
                     if (match === null) {
                         checkboxes.forEach(checkbox => {
                             checkbox.closest('li').removeAttribute('hidden');
                         });
 
+                        // Update the 'Select all' label on group filter change
                         updateSelectAllLabel();
 
                         return;
@@ -90,10 +101,12 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
                     let map = (type === 'group') ? groupsMap : sectionsMap;
                     let members = map.get(key).members;
 
+                    // Show only members of the selected group
                     checkboxes.forEach(checkbox => {
                         checkbox.closest('li').toggleAttribute('hidden', !members.includes(checkbox.id));
                     });
 
+                    // Update the 'Select all' label on group filter change
                     updateSelectAllLabel();
                 });
 
@@ -103,10 +116,12 @@ export default function ({ router, dom, api, i18n, i18n: { translate: __ } }) {
 
                     event.preventDefault();
 
+                    // Check/uncheck all the users
                     checkboxes.forEach(checkbox => {
                         checkbox.checked = checked;
                     });
 
+                    // Update the label on 'Select all' checkbox change
                     updateSelectAllLabel();
                 });
             }
